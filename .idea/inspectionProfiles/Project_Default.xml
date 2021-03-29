@@ -1,0 +1,27 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N801" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="subroutines.immse_cdf.utilities" />
+          <option value="list.T" />
+          <option value="tuple.spines" />
+          <option value="tuple.set_xticks" />
+          <option value="tuple.set_yticks" />
+          <option value="tuple.tick_params" />
+          <option value="tuple.set_xlim" />
+          <option value="tuple.xaxis" />
+          <option value="tuple.yaxis" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

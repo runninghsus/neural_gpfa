@@ -91,26 +91,45 @@ class gpfa_dynamics_plots:
         f = plt.figure(figsize=(15, 10))
         ax1 = f.add_subplot(2, 2, 1)
         ax2 = f.add_subplot(2, 2, 2, projection='3d')
-        c = ['hotpink', 'deepskyblue', 'black']
+
+        # c = ['hotpink', 'deepskyblue', 'coral', 'darkcyan', 'black']
+
         # single trial trajectories
         ax2.set_title('Latent dynamics extracted by GPFA')
         ax2.set_xlabel('Dim 1')
         ax2.set_ylabel('Dim 2')
         ax2.set_zlabel('Dim 3')
-        for single_trial_trajectory in self.trajectories:
-            ax2.plot(single_trial_trajectory[0], single_trial_trajectory[1], single_trial_trajectory[2],
-                     lw=0.5, c='gray', alpha=0.5)
+        # for single_trial_trajectory in self.trajectories:
+        #     ax2.plot(single_trial_trajectory[0], single_trial_trajectory[1], single_trial_trajectory[2],
+        #              lw=0.5, c='gray', alpha=0.5)
         # trial averaged trajectory
         average_trajectory = np.mean(self.trajectories, axis=0)
-        ax2.plot(average_trajectory[0], average_trajectory[1], average_trajectory[2],
-                 lw=2, c='red', label='Trial averaged trajectory')
-        ax2.legend()
+        rr = np.linspace(0, 1, len(average_trajectory))
+        c = plt.cm.tab20(rr)
+        r = np.linspace(0, 1, len(average_trajectory[0]))
+        cmap = plt.cm.gist_heat_r(r)
+        for i in range(1, len(average_trajectory[0])):
+            ax2.plot(average_trajectory[0][i-1:i+1], average_trajectory[1][i-1:i+1], average_trajectory[2][i-1:i+1],
+                     lw=2, c=cmap[i-1])
+        # ax2.legend()
         ax1.set_title('Decoded trial average trajectory')
         ax1.set_xlabel('Time [s]')
-        for i, x in enumerate(average_trajectory):
-            ax1.plot(np.arange(len(x)) * 0.02, x, label=f'Dim {i + 1}', c=c[i])
-        ax1.legend()
-        ax2.view_init(azim=-5, elev=75)
+        # self.trajectories.shape[-]
+        # for i, x in enumerate(self.trajectories[0]):
+        #     ax1.plot(np.arange(len(x)) * self.bin_size/1000, x, label=f'Dim {i + 1}', c=c[i])
+        for single_trial_trajectory in self.trajectories:
+            ax1.plot(np.arange(len(single_trial_trajectory[0])) * self.bin_size / 1000, single_trial_trajectory[0],
+                     lw=0.2, c='blue', alpha=0.2)
+        # for single_trial_trajectory in self.trajectories:
+        #     ax1.plot(np.arange(len(single_trial_trajectory[1])) * self.bin_size / 1000, single_trial_trajectory[1],
+        #              lw=0.2, c='magenta', alpha=0.2)
+        ax1.plot(np.arange(len(average_trajectory[0])) * self.bin_size / 1000, average_trajectory[0],
+                 lw=2, c='blue')
+        # ax1.plot(np.arange(len(average_trajectory[1])) * self.bin_size / 1000, average_trajectory[1],
+        #          lw=2, c='magenta')
+            # ax1.plot()
+        # ax1.legend()
+        # ax2.view_init(azim=-5, elev=75)
         plt.tight_layout()
         return f
 
